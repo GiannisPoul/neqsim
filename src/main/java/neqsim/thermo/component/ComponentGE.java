@@ -40,7 +40,7 @@ abstract class ComponentGE extends Component implements ComponentGEInterface {
             double activinf = 1.0;
             if (phase.hasComponent("water")) {
                 int waternumb = phase.getComponent("water").getComponentNumber();
-                activinf = gamma / ((PhaseGE) phase).getActivityCoefficientInfDilWater(componentNumber, waternumb);
+                activinf = gamma /((PhaseGE) phase).getActivityCoefficientInfDilWater(componentNumber, waternumb);
             } else {
                 activinf = gamma / ((PhaseGE) phase).getActivityCoefficientInfDil(componentNumber);
             }
