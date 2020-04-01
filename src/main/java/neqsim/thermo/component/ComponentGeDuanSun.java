@@ -291,13 +291,15 @@ public class ComponentGeDuanSun extends ComponentGE {
     		K[1]=Math.pow(10.0,(AN20+AN21*phase.getTemperature()+AN22/phase.getTemperature()+AN23*Math.log10(phase.getTemperature())+AN24/(Math.pow(phase.getTemperature(),2.0))+AN25*Math.pow(phase.getTemperature(),2.0)))*Math.exp(Poynteff[1]);
             K[2]=Math.pow(10.0,(AO20+AO21*phase.getTemperature()+AO22/phase.getTemperature()+AO23*Math.log10(phase.getTemperature())+AO24/(Math.pow(phase.getTemperature(),2.0))+AO25*Math.pow(phase.getTemperature(),2.0)))*Math.exp(Poynteff[2]);
             K[3]=(a1+a2*phase.getTemperature()+a3*Math.pow(phase.getTemperature(),2.0)+a4*Math.pow(phase.getTemperature(),3.0)+a5*Math.pow(phase.getTemperature(),4.0))*Math.exp((phase.getPressure()-1.0)*(a6+a7*phase.getTemperature())/(1000.0*(R/100.0)*phase.getTemperature()));
-    		
+//            25.689
             if (componentName.equals("CO2")) {
-            fugasityCoeffisient = activinf*K[0]*gamma*((1000.0/18.0)+25.689/(gamma*K[0]))/ phase.getPressure();	
+            fugasityCoeffisient = activinf*K[0]*gamma*(1000/18.02)/phase.getPressure();//+25.689/(gamma*K[0]))/ phase.getPressure();	
             }else if (componentName.equals("nitrogen")) {
-            fugasityCoeffisient = activinf*K[1]*gamma*((1000.0/18.0)+50.585/(gamma*K[1]))/ phase.getPressure();	
+            fugasityCoeffisient = activinf*K[1]*gamma*(1000/18.02)/phase.getPressure();//+50.585/(gamma*K[1]))/ phase.getPressure();	
             }else if (componentName.equals("oxygen")) {
-            fugasityCoeffisient = activinf*K[2]*gamma*((1000.0/18.0)+46.9157/(gamma*K[2]))/ phase.getPressure();	
+            fugasityCoeffisient = activinf*K[2]*gamma*(1000/18.02)/phase.getPressure();//+46.9157/(gamma*K[2]))/ phase.getPressure();	
+            }else if (componentName.contentEquals("water")){
+            fugasityCoeffisient = activinf*K[3]/phase.getPressure();	
             }else {
             fugasityCoeffisient = activinf*K[3]/phase.getPressure();	
             }
@@ -309,17 +311,17 @@ public class ComponentGeDuanSun extends ComponentGE {
     }
 
 /////////////////////////////////////////////////////	
-	public double getGammaPitzer(PhaseInterface phase, int numberOfComponents, double temperature, double pressure, int phasetype) {
+	public double getGammaPitzer(PhaseInterface phase, int numberOfComponents, double temperature, double pressure, int phasetype, double salinity) {
 		double P=pressure;
 		double T=temperature;
-//		double S=salinity;        
-		double salinity2=0;
+		double S=salinity;        
+//		double salinity2=0;
 		
-		if(isIsIon()) {
-			salinity2=getNumberOfMolesInPhase()/(phase.getComponent("water").getNumberOfMolesInPhase()*phase.getComponent("water").getMolarMass());
-		}
+//		if(isIsIon()) {
+//			salinity2=getNumberOfMolesInPhase()/(phase.getComponent("water").getNumberOfMolesInPhase()*phase.getComponent("water").getMolarMass());
+//		}
 		
-		double S=salinity2;
+//		double S=salinity;
 		double lamdaCO2Na=-0.411370585+0.000607632*T+97.5347708/T-0.023762247*P/T+0.017065624*P/(630.0-T)+1.41335834*Math.pow(10.0,-5.0)*T*Math.log(P);
 		double lamdaN2Na=-2.4434074+0.0036351795*T+447.47364/T-0.000013711527*P+0.0000071037217*Math.pow(P,2.0)/T;
 		double lamdaO2Na=0.19997;

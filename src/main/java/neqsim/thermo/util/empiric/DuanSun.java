@@ -852,12 +852,16 @@ public class DuanSun {
 		for (int i=0;i<3;i++) {
 			m[i]=fv[i]/(gamma[i]*K[i]);
 		}
-
+		
+//		System.out.println(m[0]);
+//		System.out.println(m[1]);
+//		System.out.println(m[2]);
+		
 		double x[]= {0.0,0.0,0.0,0.0,0.0};
-		for(int i=0;i<3;i++) {
-		x[i]=m[i]/((1000.0/18.0)+m[i]);
-		}
-		x[4]=S/((1000.0/18.0)+S);
+        x[0]=m[0]/((1000.0/18.0)+m[0]+m[1]+m[2]+S);
+        x[1]=m[1]/((1000.0/18.0)+m[0]+m[1]+m[2]+S);
+        x[2]=m[2]/((1000.0/18.0)+m[0]+m[1]+m[2]+S);
+        x[4]=S/((1000.0/18.0)+m[0]+m[1]+m[2]+S);
 		x[3]=1.0-x[0]-x[1]-x[2]-x[4];
 
 		double xCO2=x[0];
@@ -891,20 +895,20 @@ public class DuanSun {
 //		System.out.println("Total pressure " + CO2solubility2 + " bara");
 		
 //      double CO2solubility = testDuanSun.calcCO2solubimpurities(  T   ,   P   ,  S ,yCO2, yN2 ,yO2 , yH2O);   
-		double CO2solubility = testDuanSun.calcCO2solubimpurities(298.15, 150  , 3.0, 0.3333, 0.3333, 0.3333, 1-0.9999);
+		double CO2solubility = testDuanSun.calcCO2solubimpurities(308.15, 180  , 3, 0.3324, 0.3335, 0.3335, 1-0.9994);
 		
 		System.out.println("CO2solubility " + CO2solubility + " mol/mol ");
 		
 				
-		SystemInterface fluid1 = new SystemDuanSun(298.15, 150.0);
+		SystemInterface fluid1 = new SystemDuanSun(308.15, 180.0);
 //		SystemInterface fluid1 = new calcCO2solubimpurities(298.15, 10.0, 2.0, 0.9, 0.0, 0.0, 1-0.9);
 		fluid1.addComponent("CO2", 1.0, "mol/sec");
 		fluid1.addComponent("nitrogen", 1.0, "mol/sec");
 		fluid1.addComponent("oxygen", 1.0, "mol/sec");
 //		fluid1.addComponent("methane", 1.0, "mol/sec");
-		fluid1.addComponent("water", 0.9833, "mol/sec");
+		fluid1.addComponent("water", (1-(3/(1000/18.02+3))), "mol/sec");
 //mole fraction of NaCl =S/(1000/18.02+S)		
-		fluid1.addComponent("Na+", 0.0177, "mol/sec");
+		fluid1.addComponent("Na+", ((3/(1000/18.02+3))), "mol/sec");
 //		fluid1.addComponent("Cl-", 0.0177, "mol/sec");
 		fluid1.setMixingRule(2);
 		
