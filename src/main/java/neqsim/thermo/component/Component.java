@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//giannnis
+
 /*
 * Component.java
 *
@@ -1538,6 +1538,7 @@ abstract class Component extends Object
 	 *
 	 */
 	public boolean isIsIon() {
+		if (componentType.equals("ion")) setIsIon(true);
 		return isIon;
 	}
 
