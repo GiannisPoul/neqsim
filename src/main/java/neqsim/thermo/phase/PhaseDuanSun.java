@@ -54,7 +54,7 @@ public class PhaseDuanSun extends PhaseGE {
     
     public double getExessGibbsEnergy(PhaseInterface phase, int numberOfComponents, double temperature, double pressure, int phasetype){
         GE = 0;
-        double salinity=0.0;
+        double salinity=0.2531122128;
 //        double k=0.0;
 //        salinity=salinity+phase.getComponent("Na+").getNumberOfMolesInPhase()/(phase.getComponent("water").getNumberOfmoles()*phase.getComponent("water").getMolarMass());
 
